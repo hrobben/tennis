@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Speler;
+use App\Entity\Wedstrijd;
 use App\Repository\WedstrijdRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +34,9 @@ class DefaultController extends AbstractController
             array_push($wedstrijd, $speler->getId());
         }
 
+        $speler=$em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[0]]);
+        $tornooi = $speler->getTornooi();
+        //dump($tornooi[0]);
         /* maximaal 128 deelnemers, formule voor rest is    ( er zijn b.v. 100 deelnemers)
          * secuence is 128, 64, 32, 16, 8, 4, 2 ronde 1, 2, 3, 4, 5, 6, 7
          * formule 1:  aantal_deelnemers - (128 - aantal_deelnemers) = deelnemers_ronde_1    (72) (36 wedstrijden)
@@ -40,14 +45,45 @@ class DefaultController extends AbstractController
          * als er teveel aanmeldingen zijn dan alle spelers boven 128 uitsluiten.
          */
         if (shuffle($wedstrijd)) {
-            dump($wedstrijd);
-            if (count($wedstrijd) < 128) {
-                // gaan spelers direct naar ronde 2.
-                if (count($wedstrijd) < 64 ) {
-                    // we slaan ronde 1 over.
+            if (count($wedstrijd) == 128) {
+                // genoeg spelers.
+                for ($i = 1; $i < count($wedstrijd); $i++) {
+                    $game = new Wedstrijd();
+                    $game->setRonde(1);
+                    $game->setSpeler1($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[$i-1]]));
+                    $game->setSpeler2($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[++$i-1]]));
+                    $game->setTornooi($tornooi[0]);
+                    $em->persist($game);
+                    $em->flush();
                 }
+            } elseif (count($wedstrijd) > 64) {
+                // eerst de rest al naar ronde twee zetten.
+                $ronde1 = count($wedstrijd) - (128 - count($wedstrijd));  // 72 36games.
+                $ronde2 = count($wedstrijd) - $ronde1;  // 28 meteen naar ronde 2.
+                for ($i = 1; $i < $ronde2; $i++) {
+                    // de eerste 28 stuks ronde 2
+                    $game = new Wedstrijd();
+                    $game->setRonde(2);
+                    $game->setSpeler1($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[$i-1]]));
+                    $game->setSpeler2($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[++$i-1]]));
+                    $game->setTornooi($tornooi[0]);
+                    $em->persist($game);
+                    $em->flush();
+                }
+                for ($i = $ronde2; $i < count($wedstrijd); $i++) {
+                    $game = new Wedstrijd();
+                    $game->setRonde(1);
+                    $game->setSpeler1($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[$i-1]]));
+                    $game->setSpeler2($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[++$i-1]]));
+                    $game->setTornooi($tornooi[0]);
+                    $em->persist($game);
+                    $em->flush();
+                }
+            } else {
+                return $this->render('default/index.html.twig', [
+                    'controller_name' => 'DefaultController',
+                ]);
             }
-
 
         }
 

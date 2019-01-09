@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +54,11 @@ class Wedstrijd
      * @ORM\ManyToOne(targetEntity="App\Entity\Speler", inversedBy="wedstrijden")
      */
     private $winnaar;
+
+    public function __construct()
+    {
+        $this->tornooi = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {

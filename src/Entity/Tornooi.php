@@ -29,7 +29,7 @@ class Tornooi
     private $datum;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Speler", mappedBy="toernooi")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Speler", mappedBy="tornooi")
      */
     private $spelers;
 
@@ -85,7 +85,7 @@ class Tornooi
     {
         if (!$this->spelers->contains($speler)) {
             $this->spelers[] = $speler;
-            $speler->addToernooi($this);
+            $speler->addTornooi($this);
         }
 
         return $this;
@@ -95,7 +95,7 @@ class Tornooi
     {
         if ($this->spelers->contains($speler)) {
             $this->spelers->removeElement($speler);
-            $speler->removeToernooi($this);
+            $speler->removeTornooi($this);
         }
 
         return $this;
