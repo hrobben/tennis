@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>users list</h1>
+    </div>
+
+    {% if is_granted("ROLE_USER") %}
+        <table id="lijst" class="table table-responsive table-striped">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th class="hidden-xs hidden-sm">Role</th>
+                <th>laatste login</th>
+
+                <th class="hidden-xs hidden-sm">laatste actie</th>
+                <th class="hidden-xs hidden-sm">Naam</th>
+                <th class="hidden-xs hidden-sm">email</th>
+                <th>Active</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td c@635lass="hidden-xs hidden-sm">{% for role in user.roles %}
+                        {{ role }} &nbsp;&nbsp;
+                    {% endfor %}</td>
+                    <td>{{ user.lastLogin |date('d-m-Y H:i') }}</td>
+                    <td class="hidden-xs hidden-sm">{% if user.lastActivityAt %}{{ user.lastActivityAt |date('d-m-Y H:i') }}{% endif %}</td>
+                    <td class="hidden-xs hidden-sm">{% if (names[user.username]) %}{{ names[user.username].roepnaam }} {{ names[user.username].voorvoegsel }} {{ names[user.username].achternaam }}{% else %}admin{% endif %}</td>
+                    <td class="hidden-xs hidden-sm">{{ user.email }}</td>
+                    <td>{% if user.enabled %}Yes{% else %}No{% endif %}</td>
+                    <td>
+                        <a href="{{ path('role_action', { 'id': user.id }) }}">
+                            <button type="button" class="btn btn-xs btn-info">{% if user.roles[0] == 'ROLE_SUPER_ADMIN' %}Remove Admin{% else %}Make Admin{% endif %}</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>U dient administrator rechten te hebben om hier iets te zien.</h3>
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            var table = $('#lijst').DataTable({
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ],
+            });
+
+            table.buttons().container()
+                .appendTo($('.col-sm-6:eq(0)', table.table().container()));
+
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
+{% endblock %}
