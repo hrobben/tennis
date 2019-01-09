@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Speler{% endblock %}
+
+{% block body %}
+    <h1>Speler</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ speler.id }}</td>
+            </tr>
+            <tr>
+                <th>Roepnaam</th>
+                <td>{{ speler.roepnaam }}</td>
+            </tr>
+            <tr>
+                <th>Tussenvoegsel</th>
+                <td>{{ speler.tussenvoegsel }}</td>
+            </tr>
+            <tr>
+                <th>Achternaam</th>
+                <td>{{ speler.achternaam }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('speler_index') }}">back to list</a>
+
+    <a href="{{ path('speler_edit', {'id': speler.id}) }}">edit</a>
+
+    {{ include('speler/_delete_form.html.twig') }}
+{% endblock %}

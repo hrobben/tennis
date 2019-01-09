@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wedstrijd{% endblock %}
+
+{% block body %}
+    <h1>Wedstrijd</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ wedstrijd.id }}</td>
+            </tr>
+            <tr>
+                <th>Ronde</th>
+                <td>{{ wedstrijd.ronde }}</td>
+            </tr>
+            <tr>
+                <th>Score1</th>
+                <td>{{ wedstrijd.score1 }}</td>
+            </tr>
+            <tr>
+                <th>Score2</th>
+                <td>{{ wedstrijd.score2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('wedstrijd_index') }}">back to list</a>
+
+    <a href="{{ path('wedstrijd_edit', {'id': wedstrijd.id}) }}">edit</a>
+
+    {{ include('wedstrijd/_delete_form.html.twig') }}
+{% endblock %}

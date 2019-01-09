@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tornooi{% endblock %}
+
+{% block body %}
+    <h1>Tornooi</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tornooi.id }}</td>
+            </tr>
+            <tr>
+                <th>Omschrijving</th>
+                <td>{{ tornooi.omschrijving }}</td>
+            </tr>
+            <tr>
+                <th>Datum</th>
+                <td>{{ tornooi.datum ? tornooi.datum|date('Y-m-d H:i:s T') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('tornooi_index') }}">back to list</a>
+
+    <a href="{{ path('tornooi_edit', {'id': tornooi.id}) }}">edit</a>
+
+    {{ include('tornooi/_delete_form.html.twig') }}
+{% endblock %}

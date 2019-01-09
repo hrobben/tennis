@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Tornooi{% endblock %}
+
+{% block body %}
+    <h1>Create new Tornooi</h1>
+
+    {{ include('tornooi/_form.html.twig') }}
+
+    <a href="{{ path('tornooi_index') }}">back to list</a>
+{% endblock %}
