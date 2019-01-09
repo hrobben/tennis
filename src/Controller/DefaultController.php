@@ -32,9 +32,21 @@ class DefaultController extends AbstractController
             array_push($wedstrijd, $speler->getId());
         }
 
-        // maximaal 128 deelnemers, formule voor rest is
+        /* maximaal 128 deelnemers, formule voor rest is    ( er zijn b.v. 100 deelnemers)
+         * secuence is 128, 64, 32, 16, 8, 4, 2 ronde 1, 2, 3, 4, 5, 6, 7
+         * formule 1:  aantal_deelnemers - (128 - aantal_deelnemers) = deelnemers_ronde_1    (72) (36 wedstrijden)
+         * er gaan ;  naar_ronde_2 = aantal_deelnemers - deelnemers_ronde_1     (28 gaan er zo door).
+         *
+         * als er teveel aanmeldingen zijn dan alle spelers boven 128 uitsluiten.
+         */
         if (shuffle($wedstrijd)) {
             dump($wedstrijd);
+            if (count($wedstrijd) < 128) {
+                // gaan spelers direct naar ronde 2.
+                if (count($wedstrijd) < 64 ) {
+                    // we slaan ronde 1 over.
+                }
+            }
 
 
         }
