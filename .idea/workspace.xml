@@ -4,8 +4,6 @@
     <list default="true" id="3aac8b14-2531-44cb-a4ad-173d19c8cf1b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DefaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Tornooi.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Tornooi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Wedstrijd.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Wedstrijd.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,16 +40,16 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="php" value="1935" />
+          <entry key="php" value="1999" />
           <entry key="twig" value="119" />
-          <entry key="txt" value="45" />
+          <entry key="txt" value="94" />
           <entry key="yaml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="1935" />
-          <entry key="PLAIN_TEXT" value="45" />
+          <entry key="PHP" value="1999" />
+          <entry key="PLAIN_TEXT" value="94" />
           <entry key="Twig" value="119" />
           <entry key="YAML" value="1" />
         </counts>
@@ -94,8 +92,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="474">
-              <caret line="72" column="33" selection-start-line="72" selection-start-column="33" selection-end-line="72" selection-end-column="33" />
+            <state relative-caret-position="390">
+              <caret line="58" column="115" lean-forward="true" selection-start-line="58" selection-start-column="115" selection-end-line="58" selection-end-column="115" />
               <folding>
                 <element signature="e#34#56#0#PHP" expanded="true" />
                 <element signature="e#206#252#0#PHP" />
@@ -473,7 +471,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1547018096817</updated>
-      <workItem from="1547018098132" duration="13355000" />
+      <workItem from="1547018098132" duration="15928000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1547022474468</created>
@@ -496,23 +494,30 @@
       <option name="project" value="LOCAL" />
       <updated>1547030184098</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="vullen van wedstrijd tabel alleen onder 128">
+      <created>1547035583448</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1547035583448</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13355000" />
+    <option name="totallyTimeSpent" value="15928000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1046" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17094018" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17094018" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" sideWeight="0.49946582" visible="true" weight="0.19435029" />
+      <window_info active="true" anchor="bottom" id="Terminal" sideWeight="0.49946582" visible="true" weight="0.19435029" />
       <window_info anchor="bottom" id="Event Log" sideWeight="0.5005342" side_tool="true" weight="0.19435029" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -536,7 +541,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first" />
     <MESSAGE value="met extra knop voor wedstrijd te maken." />
-    <option name="LAST_COMMIT_MESSAGE" value="met extra knop voor wedstrijd te maken." />
+    <MESSAGE value="vullen van wedstrijd tabel alleen onder 128" />
+    <option name="LAST_COMMIT_MESSAGE" value="vullen van wedstrijd tabel alleen onder 128" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
@@ -698,8 +704,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="72" column="33" selection-start-line="72" selection-start-column="33" selection-end-line="72" selection-end-column="33" />
+        <state relative-caret-position="390">
+          <caret line="58" column="115" lean-forward="true" selection-start-line="58" selection-start-column="115" selection-end-line="58" selection-end-column="115" />
           <folding>
             <element signature="e#34#56#0#PHP" expanded="true" />
             <element signature="e#206#252#0#PHP" />
