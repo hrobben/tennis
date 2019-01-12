@@ -56,7 +56,7 @@ class DefaultController extends AbstractController
                     $em->persist($game);
                     $em->flush();
                 }
-            } elseif (count($wedstrijd) > 64) and (count($wedstrijd)< 128) {  // moet dus tussen 64 en 128 zitten.
+            } elseif ((count($wedstrijd) > 64) and (count($wedstrijd)< 128)) {  // moet dus tussen 64 en 128 zitten.
                 // eerst de rest al naar ronde twee zetten.
                 $ronde1 = count($wedstrijd) - (128 - count($wedstrijd));  // 72 36games.
                 $ronde2 = count($wedstrijd) - $ronde1;  // 28 meteen naar ronde 2.
