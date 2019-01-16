@@ -92,4 +92,34 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/checkGame", name="checkGame")
+     */
+    public function checkGame(WedstrijdRepository $wedstrijdRepository): Response
+    {
+        // check if all winners are calculated, otherwise show the equal scores.
+        $em = $this->getDoctrine()->getManager();
+        $wedstrijden = $wedstrijdRepository->findAll();
+        foreach ($wedstrijden as $wedstrijd) {
+            if ($wedstrijd->getScore1() > $wedstrijd->getScore2()) {
+                $wedstrijd->setWinnaar($wedstrijd->getSpeler1());
+            } elseif ($wedstrijd->getScore1() < $wedstrijd->getScore2()) {
+                $wedstrijd->setWinnaar($wedstrijd->getSpeler2());
+            }
+            $em->persist($wedstrijd);
+            $em->flush();
+        }
+        return $this->render('wedstrijd/index.html.twig', [
+            'wedstrijds' => $wedstrijdRepository->findBy(['winnaar' => null]),
+        ]);
+
+    }
+
+    /**
+     * @Route("/make32Game", name="make32Game")
+     */
+    public function make32Game(WedstrijdRepository $wedstrijdRepository): Response
+    {
+        // All scores are known. Make next 32 to 16 round.
+    }
 }
