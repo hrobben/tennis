@@ -31,10 +31,11 @@ class DefaultController extends AbstractController
 
         $wedstrijd = [];
         foreach ($spelers as $speler) {
+            // als speler ingeschreven is.
             array_push($wedstrijd, $speler->getId());
         }
 
-        $speler=$em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[0]]);
+        $speler = $em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[0]]);
         $tornooi = $speler->getTornooi();
         //dump($tornooi[0]);
         /* maximaal 128 deelnemers, formule voor rest is    ( er zijn b.v. 100 deelnemers)
@@ -50,13 +51,13 @@ class DefaultController extends AbstractController
                 for ($i = 1; $i < count($wedstrijd); $i++) {
                     $game = new Wedstrijd();
                     $game->setRonde(1);
-                    $game->setSpeler1($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[$i-1]]));
-                    $game->setSpeler2($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[++$i-1]]));
+                    $game->setSpeler1($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[$i - 1]]));
+                    $game->setSpeler2($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[++$i - 1]]));
                     $game->setTornooi($tornooi[0]);
                     $em->persist($game);
                     $em->flush();
                 }
-            } elseif ((count($wedstrijd) > 64) and (count($wedstrijd)< 128)) {  // moet dus tussen 64 en 128 zitten.
+            } elseif ((count($wedstrijd) > 64) and (count($wedstrijd) < 128)) {  // moet dus tussen 64 en 128 zitten.
                 // eerst de rest al naar ronde twee zetten.
                 $ronde1 = count($wedstrijd) - (128 - count($wedstrijd));  // 72 36games.
                 $ronde2 = count($wedstrijd) - $ronde1;  // 28 meteen naar ronde 2.
@@ -64,8 +65,8 @@ class DefaultController extends AbstractController
                     // de eerste 28 stuks ronde 2
                     $game = new Wedstrijd();
                     $game->setRonde(2);
-                    $game->setSpeler1($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[$i-1]]));
-                    $game->setSpeler2($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[++$i-1]]));
+                    $game->setSpeler1($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[$i - 1]]));
+                    $game->setSpeler2($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[++$i - 1]]));
                     $game->setTornooi($tornooi[0]);
                     $em->persist($game);
                     $em->flush();
@@ -73,8 +74,8 @@ class DefaultController extends AbstractController
                 for ($i = $ronde2; $i < count($wedstrijd); $i++) {
                     $game = new Wedstrijd();
                     $game->setRonde(1);
-                    $game->setSpeler1($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[$i-1]]));
-                    $game->setSpeler2($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[++$i-1]]));
+                    $game->setSpeler1($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[$i - 1]]));
+                    $game->setSpeler2($em->getRepository('App:Speler')->findOneBy(['id' => $wedstrijd[++$i - 1]]));
                     $game->setTornooi($tornooi[0]);
                     $em->persist($game);
                     $em->flush();
@@ -121,5 +122,39 @@ class DefaultController extends AbstractController
     public function make32Game(WedstrijdRepository $wedstrijdRepository): Response
     {
         // All scores are known. Make next 32 to 16 round.
+    }
+
+    /**
+     * @Route("/closeGame/{id}", name="closeGame")
+     */
+    public function closeGame(WedstrijdRepository $wedstrijdRepository, $id): Response
+    {
+        // afsluiten ronde nummer {id}
+        $wedstrijden = $wedstrijdRepository->findBy(['ronde' => $id]);
+        // twee aan twee bij elkaar brengen in nieuw record voor volgende ronde.
+        $teller = 1;
+        foreach ($wedstrijden as $wedstrijd) {
+            // winnaar eerste wedstrijd tegen winnaar tweede wedstrijd.
+            if ($teller & 1) { // oneven
+                $ws = new Wedstrijd();
+                $ws->setTornooi($wedstrijd->getTornooi());
+                $ws->setRonde($id + 1);
+            }
+            if ($teller % 2 == 0) {   // als teller even.
+                $ws->setSpeler2($wedstrijd->getWinnaar());
+                // na de tweede schrijven.
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($ws);
+                $entityManager->flush();
+                ++$teller;
+            } else {
+                $ws->setSpeler1($wedstrijd->getWinnaar());
+                ++$teller;
+            }
+            dump($teller);
+        }
+        return $this->render('wedstrijd/index.html.twig', [
+            'wedstrijds' => $wedstrijden,
+        ]);
     }
 }

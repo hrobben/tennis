@@ -12,6 +12,9 @@
                 <th>Ronde</th>
                 <th>Score1</th>
                 <th>Score2</th>
+                <th>speler1</th>
+                <th>speler2</th>
+                <th>winnaar</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +25,9 @@
                 <td>{{ wedstrijd.ronde }}</td>
                 <td>{{ wedstrijd.score1 }}</td>
                 <td>{{ wedstrijd.score2 }}</td>
+                <td>{{ wedstrijd.speler1 }}</td>
+                <td>{{ wedstrijd.speler2 }}</td>
+                <td>{{ wedstrijd.winnaar }}</td>
                 <td>
                     <a href="{{ path('wedstrijd_show', {'id': wedstrijd.id}) }}">show</a>
                     <a href="{{ path('wedstrijd_edit', {'id': wedstrijd.id}) }}">edit</a>
